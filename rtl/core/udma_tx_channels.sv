@@ -100,7 +100,7 @@ module udma_tx_channels
     logic                        s_send_req;
 
     logic                      [L2_AWIDTH_NOAL-1:0] s_addr;
-    logic [N_CHANNELS_TX-1:0]  [L2_AWIDTH_NOAL-1:0] s_curr_addr;
+    logic [N_LIN_CHANNELS-1:0] [L2_AWIDTH_NOAL-1:0] s_curr_addr;
     logic                      [L2_AWIDTH_NOAL-1:0] r_in_addr;
 
     logic                  [1:0] s_size;

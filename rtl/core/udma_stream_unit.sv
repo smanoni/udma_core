@@ -207,35 +207,38 @@ module udma_stream_unit
 
      always_ff @(posedge clk_i or negedge rstn_i) 
      begin 
-          if(~rstn_i) 
+          if(~rstn_i)
           begin
                r_wr_ptr      <= 'h0;
                r_rd_ptr      <= 'h0;
                r_jump_src    <= 'h0;
                r_jump_dst    <= 'h0;
                r_do_jump     <= 'h0;
+               r_datasize    <= 'h0;
                r_err         <= 'h0;
                r_state       <= ST_IDLE;
-          end 
-          else 
+          end
+          else
           begin
-               if(cmd_clr_i) 
+               if(cmd_clr_i)
                begin
                     r_wr_ptr      <= 'h0;
                     r_rd_ptr      <= 'h0;
                     r_jump_src    <= 'h0;
                     r_jump_dst    <= 'h0;
                     r_do_jump     <= 'h0;
+                    r_datasize    <= 'h0;
                     r_err         <= 'h0;
                     r_state       <= ST_IDLE;
                end
-               else 
+               else
                begin
                     r_state <= s_state;
 
                     if (s_sample_wr_start)
                     begin
                          r_wr_ptr     <= spoof_addr_i;
+                         r_datasize   <= spoof_datasize_i;
                     end
                     else if(s_sample_wr)
                     begin
