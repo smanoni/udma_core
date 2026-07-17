@@ -86,8 +86,12 @@ module udma_stream_unit
      assign out_stream_data_o     = s_stream_sel ? s_fifo_in_data : in_stream_data_i;
      assign out_stream_datasize_o = s_stream_sel ? r_datasize : in_stream_datasize_i; 
      assign out_stream_valid_o    = s_stream_sel ? s_fifo_in_valid : in_stream_valid_i; 
-     assign out_stream_sot_o      = s_stream_sel ? 1'b0 : in_stream_sot_i; 
-     assign out_stream_eot_o      = s_stream_sel ? 1'b0 : in_stream_eot_i; 
+     assign out_stream_sot_o      = s_stream_sel ? 1'b0 : in_stream_sot_i;
+     assign out_stream_eot_o      = s_stream_sel ? 1'b0 : in_stream_eot_i;
+     // Input stream is forwarded to the output only in pass-through mode
+     // (s_stream_sel==0), matching the data/valid muxes above; in buffered
+     // mode the output is sourced from the FIFO and the input is not consumed.
+     assign in_stream_ready_o     = s_stream_sel ? 1'b0 : out_stream_ready_i;
 
      assign s_wr_ptr_guess = r_wr_ptr + s_datasize_toadd;
      assign s_is_jump      = (spoof_addr_i != s_wr_ptr_guess);
